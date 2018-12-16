@@ -6,21 +6,14 @@
 
 int module::count = 0;
 
-void module::pushSet(const std::vector<int>& hyperEdge)
+int hypernet::DoubleHPWL(const std::vector<module*>& modules)
 {
-  // insert each element to set
-  for (auto i : hyperEdge)
-    adjSet.insert(i);
-}
-
-int module::HPWL(const std::vector<module*>& modules)
-{
-  int minX = X, maxX = X, minY = Y, maxY = Y;
-  for (auto i : adjSet) {
-    minX = std::min(modules[i]->getX(), minX);
-    maxX = std::max(modules[i]->getX(), maxX);
-    minY = std::min(modules[i]->getY(), minY);
-    maxY = std::max(modules[i]->getY(), maxY);
+  int minX = 100000000, maxX = 0, minY = 100000000, maxY = 0;
+  for (auto i : nodes) {
+    minX = std::min(modules.at(i)->getDCX(), minX);
+    maxX = std::max(modules.at(i)->getDCX(), maxX);
+    minY = std::min(modules.at(i)->getDCY(), minY);
+    maxY = std::max(modules.at(i)->getDCY(), maxY);
   }
   return maxX - minX + maxY - minY;
 }

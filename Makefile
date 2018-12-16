@@ -1,6 +1,6 @@
 ### Makefile for EE 5301 MP3 ###
 
-CXXFLAGS	= -std=c++11 -Wall -Wextra -g
+CXXFLAGS	= -std=c++11 -Wall -Wextra -O2
 CXX		= g++ $(CXXFLAGS)
 
 

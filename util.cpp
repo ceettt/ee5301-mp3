@@ -20,7 +20,8 @@ std::mt19937 gen(rd());
 std::uniform_real_distribution<float> dis(0,1);
 
 void read_ckt(std::ifstream& inFile,
-	      std::vector<module*>& modules)
+	      std::vector<module*>& modules,
+	      std::vector<hypernet*>& nets)
 {
   std::string line;
   std::getline(inFile, line);
@@ -57,8 +58,8 @@ void read_ckt(std::ifstream& inFile,
     for (auto j = 0; j < numElements; ++j) 
       lineStream >> edgeVec[j];
     // push the current edge to each element in it
-    for (auto j : edgeVec)
-      modules[j]->pushSet(edgeVec);
+    hypernet *ptr = new hypernet(numElements, edgeVec);
+    nets.push_back(ptr);
   }
 }
 
@@ -72,14 +73,14 @@ bool accept_move(float dCost,
   return r < boltz;
 }
 
-float cost(int HPWL, int area, float alpha)
+float cost(float HPWL, int area, float alpha)
 {
   return alpha * area + (1 - alpha) * HPWL;
 }
 
 
 float kboltz(graph& myGraph,
-	     const int initHPWL,
+	     const float initHPWL,
 	     const int initArea,
 	     const float alpha,
 	     std::pair<std::vector<int>, std::vector<int>>& SP)
@@ -117,7 +118,7 @@ float kboltz(graph& myGraph,
     myGraph.update_graph(module1, SP);
     myGraph.update_graph(module2, SP);
     myGraph.pack();
-    int currentHPWL = myGraph.getHPWL();
+    float currentHPWL = myGraph.getHPWL();
     int currentArea = myGraph.getArea();
     float currentCost = cost(currentHPWL, currentArea, alpha);
     float dCost = currentCost - initCost;
@@ -147,14 +148,14 @@ void annealing(graph& myGraph,
 	       const float k,
 	       const int num_moves,
 	       const float alpha,
-	       const int initHPWL,
+	       const float initHPWL,
 	       const int initArea,
 	       std::ofstream& outFile,
 	       std::pair<std::vector<int>, std::vector<int>>& SP)
 {
   auto& GammaP = SP.first;
   auto& GammaN = SP.second;
-  int currentHPWL = initHPWL;
+  float currentHPWL = initHPWL;
   int currentArea = initArea;
   float currentCost = cost(initHPWL, initArea, alpha);
   int num_modules = module::count;
@@ -186,7 +187,7 @@ void annealing(graph& myGraph,
       myGraph.update_graph(module1, SP);
       myGraph.update_graph(module2, SP);
       myGraph.pack();
-      int newHPWL = myGraph.getHPWL();
+      float newHPWL = myGraph.getHPWL();
       int newArea = myGraph.getArea();
       float newCost = cost(newHPWL, newArea, alpha);
       if (accept_move(newCost - currentCost, k, T)) {

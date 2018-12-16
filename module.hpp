@@ -11,8 +11,7 @@ private:
   int label;
   int width;
   int height;
-  std::set<int> adjSet;
-
+  
   int X;
   int Y;
 public:
@@ -35,14 +34,28 @@ public:
     X = _wC;
     Y = _hC;
   }
-  void pushSet(const std::vector<int>& hyperEdge);
-  int HPWL(const std::vector<module*>& modules);
+  int getDCX() const {
+    return 2 * X + width;
+  }
+  int getDCY() const {
+    return 2 * Y + height;
+  }
   int getLabel() const {
     return label;
   }
 };
 
+class hypernet {
+private:
+  int size;
+  std::vector<int> nodes;
 
-
+public:
+  hypernet(int __size, std::vector<int>& __edgeVec): size(__size) {
+    nodes = __edgeVec;
+  }
+  int DoubleHPWL(const std::vector<module*>& modules);
+};  
+    
 
 #endif

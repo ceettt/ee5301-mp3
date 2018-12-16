@@ -2,13 +2,14 @@
 #define UTIL_HPP
 
 void read_ckt(std::ifstream& inFile,
-	      std::vector<module*>& modules);
+	      std::vector<module*>& modules,
+	      std::vector<hypernet*>& nets);
 
 void printUsage();
 
 
 float kboltz(graph& myGraph,
-	     const int initHPWL,
+	     const float initHPWL,
 	     const int initArea,
 	     const float alpha,
 	     std::pair<std::vector<int>, std::vector<int>>& SP);
@@ -20,7 +21,7 @@ void annealing(graph& myGraph,
 	       const float k,
 	       const int num_moves,
 	       const float alpha,
-	       const int initHPWL,
+	       const float initHPWL,
 	       const int initArea,
 	       std::ofstream& outFile,
 	       std::pair<std::vector<int>, std::vector<int>>& SP);

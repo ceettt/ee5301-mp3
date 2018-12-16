@@ -25,6 +25,7 @@ int main(const int argc, const char *argv[])
 
   std::vector<std::string> args(argv, argv+argc);
   std::vector<module*> modules;
+  std::vector<hypernet*> nets;
   std::string result_filename = "_Chen_Tonglin.out2";
   std::string step_filename = "step.csv";
   
@@ -57,7 +58,7 @@ int main(const int argc, const char *argv[])
       std::cerr << "Cannot open file:\t" << args.at(1) << std::endl;
       exit(1);
     }
-    read_ckt(ckt_file, modules);
+    read_ckt(ckt_file, modules, nets);
     ckt_file.close();
     std::ofstream result_file(result_filename);
     if (!result_file.is_open()) {
@@ -78,11 +79,11 @@ int main(const int argc, const char *argv[])
     std::shuffle(GammaP.begin(), GammaP.end(), gen);
     std::shuffle(GammaN.begin(), GammaN.end(), gen);
     auto SP = std::make_pair(GammaP, GammaN);
-    graph myGraph(modules.size(), modules);
+    graph myGraph(modules.size(), modules, nets);
     myGraph.construct_graph(SP);
     myGraph.pack();
     int initArea = myGraph.getArea();
-    int initHPWL = myGraph.getHPWL();
+    float initHPWL = myGraph.getHPWL();
     result_file << "Initial area:  " << initArea << std::endl
 		<< "Initial HPWL:  " << initHPWL << std::endl
 		<< "Initial Width: " << myGraph.getWidth() << std::endl

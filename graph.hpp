@@ -11,13 +11,17 @@ private:
   std::vector<std::vector<int>> HCG, VCG; // adjMatrix
   std::vector<int> fTemp, fPerm, wC, hC;
   std::vector<module*> modules;
+  std::vector<hypernet*> nets;
   int chipWidth;
   int chipHeight;
 
   int visit(int i, bool isHorizonal);
 public:
-  graph(std::size_t __size, const std::vector<module*>& __m): size(__size) {
+  graph(std::size_t __size,
+	const std::vector<module*>& __m,
+	const std::vector<hypernet*>& __n): size(__size) {
     modules = __m;
+    nets = __n;
     HCG.resize(__size);
     VCG.resize(__size);
     fTemp.resize(__size);
@@ -46,11 +50,11 @@ public:
   int getArea() const {
     return chipWidth * chipHeight;
   }
-  int getHPWL() const {
-    int HPWL = 0;
-    for (unsigned int i = 0; i < size; ++i)
-      HPWL += modules[i]->HPWL(modules);
-    return HPWL;
+  float getHPWL() const {
+    int DHPWL = 0;
+    for (auto i: nets)
+      DHPWL += i->DoubleHPWL(modules);
+    return (float)DHPWL / 2.0;
   }
 };
 
