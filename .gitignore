@@ -33,3 +33,7 @@
 
 *~
 floorplan
+*.out2*
+*.txt
+*.csv
+.directory

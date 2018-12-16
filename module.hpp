@@ -37,6 +37,9 @@ public:
   }
   void pushSet(const std::vector<int>& hyperEdge);
   int HPWL(const std::vector<module*>& modules);
+  int getLabel() const {
+    return label;
+  }
 };
 
 

@@ -37,6 +37,12 @@ public:
   void update_graph(unsigned int i,
 		    const std::pair<std::vector<int>, std::vector<int>>& SP);
   void pack();
+  int getWidth() const {
+    return chipWidth;
+  }
+  int getHeight() const {
+    return chipHeight;
+  }
   int getArea() const {
     return chipWidth * chipHeight;
   }
