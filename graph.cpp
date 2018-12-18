@@ -39,14 +39,15 @@ void graph::update_graph(unsigned int i,
   const std::vector<int>& GammaP = SP.first;
   const std::vector<int>& GammaN = SP.second;
 
+  auto iIterP = std::find(GammaP.cbegin(), GammaP.cend(), i);
+  auto iIterN = std::find(GammaN.cbegin(), GammaN.cend(), i);
+
   for (unsigned int j = 0; j < size; ++j) {
     if (i != j) {
       HCG[i][j] = -1;
       VCG[i][j] = -1;
       HCG[j][i] = -1;
       VCG[j][i] = -1;
-      auto iIterP = std::find(GammaP.cbegin(), GammaP.cend(), i);
-      auto iIterN = std::find(GammaN.cbegin(), GammaN.cend(), i);
       auto jIterP = std::find(GammaP.cbegin(), GammaP.cend(), j);
       auto jIterN = std::find(GammaN.cbegin(), GammaN.cend(), j);
       if ((iIterP < jIterP) && (iIterN < jIterN))

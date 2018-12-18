@@ -223,7 +223,11 @@ void annealing(graph& myGraph,
 
 void printUsage()
 {
-
+  std::cerr << "USAGE: ./floorplan -<option> [filepath] " << std::endl;
+  std::cerr << "Options: -a   floorplan based only on area" << std::endl
+	    << "         -w   floorplan baesd only on wire length" << std::endl
+	    << "         -c   floorplan based on both wire length and area"
+	    << std::endl;
 }
 
 void printCoordinate(const std::vector<module*>& modules,
