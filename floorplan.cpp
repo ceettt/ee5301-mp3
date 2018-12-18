@@ -55,19 +55,19 @@ int main(const int argc, const char *argv[])
     alpha = alpha;
     std::ifstream ckt_file(args.at(2));
     if (!ckt_file.is_open()) {
-      std::cerr << "Cannot open file:\t" << args.at(1) << std::endl;
+      std::cerr << "Cannot open file:\t" << args.at(2) << std::endl;
       exit(1);
     }
     read_ckt(ckt_file, modules, nets);
     ckt_file.close();
     std::ofstream result_file(result_filename);
     if (!result_file.is_open()) {
-      std::cerr << "Cannot open file:\t" << args.at(1) << std::endl;
+      std::cerr << "Cannot open file:\t" << result_filename << std::endl;
       exit(1);
     }
     std::ofstream step_file(step_filename);
     if (!step_file.is_open()) {
-      std::cerr << "Cannot open file:\t" << args.at(1) << std::endl;
+      std::cerr << "Cannot open file:\t" << result_filename << std::endl;
       exit(1);
     }
     // generate random sequence pair
